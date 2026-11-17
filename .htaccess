@@ -1,5 +1,5 @@
 Options -Indexes
 DirectoryIndex index.html index.php
-<FilesMatch "^(config\.php)$">
+<FilesMatch "^(config\.php|config\.example\.php|README\.md|\.gitignore)$">
   Require all denied
 </FilesMatch>
