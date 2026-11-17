@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Backoffice · Axe Info</title>
+  <link rel="icon" href="../images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Play:wght@400;700&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/style.css">
+  <style>
+    body { background: var(--night-900); }
+    .login { min-height: 100svh; display: grid; place-items: center; padding: 20px;
+      background: radial-gradient(700px 500px at 70% 10%, rgba(94,23,235,.3), transparent 60%), var(--night-900); }
+    .login .card { width: min(400px, 100%); padding: 34px; display: grid; gap: 16px; }
+    .login img { height: 60px; width: auto; margin: 0 auto 6px; }
+
+    .app { display: grid; grid-template-columns: 240px 1fr; min-height: 100svh; }
+    .side { background: var(--night-800); border-right: 1px solid var(--line); padding: 22px 16px; display: flex; flex-direction: column; gap: 6px; position: sticky; top: 0; height: 100svh; }
+    .side img { height: 44px; width: auto; margin: 0 8px 24px; align-self: flex-start; }
+    .app > div { min-width: 0; }
+    .side button, .side a.navl { display: flex; align-items: center; gap: 12px; font: inherit; color: #cfd0dd; background: none; border: 0; border-radius: 12px; padding: 11px 12px; cursor: pointer; text-align: left; width: 100%; }
+    .side button svg, .side a.navl svg { width: 20px; height: 20px; }
+    .side button:hover, .side a.navl:hover { background: rgba(255,255,255,.05); color: #fff; }
+    .side button.active { background: rgba(139,117,255,.18); color: #fff; }
+    .side .pill { margin-left: auto; background: var(--violet); color: #fff; border-radius: 999px; font-size: .72rem; padding: 2px 8px; }
+    .side .grow { flex: 1; }
+    .main { padding: 28px clamp(16px, 3vw, 40px) 60px; min-width: 0; }
+    .topbar { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; margin-bottom: 22px; }
+    .topbar h1 { font-size: 1.8rem; margin: 0; }
+    .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 22px; }
+    .kpi { padding: 18px; }
+    .kpi span { color: var(--muted); font-size: .85rem; }
+    .kpi strong { display: block; font-family: var(--font-title); font-size: 1.7rem; }
+    @media (max-width: 900px) { .kpis { grid-template-columns: 1fr 1fr; } }
+
+    .table-wrap { overflow-x: auto; border-radius: var(--radius); border: 1px solid var(--line); background: var(--night-800); }
+    table { width: 100%; border-collapse: collapse; font-size: .93rem; }
+    th, td { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+    th { font-family: var(--font-title); font-weight: 400; font-size: .76rem; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); background: rgba(255,255,255,.02); white-space: nowrap; }
+    tr:last-child td { border-bottom: 0; }
+    tbody tr:hover { background: rgba(255,255,255,.025); }
+    td.thumbc img, td.thumbc .ph { width: 52px; height: 52px; border-radius: 10px; object-fit: contain; background: #f4f4f8; }
+    td.thumbc .ph { background: var(--night-600); }
+    .pname { font-weight: 600; }
+    .psub { color: var(--muted); font-size: .82rem; }
+    .num { white-space: nowrap; font-variant-numeric: tabular-nums; }
+    .row-actions { display: flex; gap: 6px; justify-content: flex-end; }
+    .mini { padding: 7px 12px; border-radius: 9px; border: 1px solid var(--line); background: rgba(255,255,255,.04); color: #fff; font: inherit; font-size: .82rem; cursor: pointer; white-space: nowrap; }
+    .mini:hover { border-color: var(--violet-soft); }
+    .mini.danger:hover { border-color: var(--danger); color: var(--danger); }
+    .switch { position: relative; width: 40px; height: 22px; display: inline-block; flex: none; }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .switch span { position: absolute; inset: 0; border-radius: 999px; background: var(--night-600); cursor: pointer; transition: background .2s; }
+    .switch span::after { content: ""; position: absolute; width: 16px; height: 16px; left: 3px; top: 3px; border-radius: 50%; background: #fff; transition: transform .2s; }
+    .switch input:checked + span { background: var(--violet); }
+    .switch input:checked + span::after { transform: translateX(18px); }
+    .stock-pill { font-size: .8rem; padding: 3px 9px; border-radius: 999px; background: rgba(60,207,142,.14); color: #9ff0c9; }
+    .stock-pill.low { background: rgba(255,181,71,.14); color: #ffd69a; }
+    .stock-pill.out { background: rgba(255,92,122,.14); color: #ffb3c1; }
+
+    /* Éditeur produit */
+    .editor { width: min(860px, 100%); }
+    .editor .grid { display: grid; grid-template-columns: 240px 1fr; gap: 24px; padding: 28px; }
+    @media (max-width: 760px) { .editor .grid { grid-template-columns: 1fr; } }
+    .drop { aspect-ratio: 1; border-radius: 16px; border: 2px dashed rgba(255,255,255,.18); display: grid; place-items: center; text-align: center; color: var(--muted); cursor: pointer; overflow: hidden; background: rgba(255,255,255,.02); position: relative; font-size: .88rem; padding: 12px; }
+    .drop.has { border-style: solid; background: #f4f4f8; padding: 0; }
+    .drop img { width: 100%; height: 100%; object-fit: contain; }
+    .drop.drag { border-color: var(--violet-soft); background: rgba(139,117,255,.08); }
+    .editor .fields { display: grid; gap: 14px; }
+    .form-row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+    @media (max-width: 620px) { .form-row3 { grid-template-columns: 1fr 1fr; } }
+    .toggles { display: flex; gap: 22px; flex-wrap: wrap; }
+    .toggles label { display: flex; align-items: center; gap: 10px; font-size: .92rem; cursor: pointer; }
+    .editor footer { display: flex; justify-content: space-between; gap: 10px; padding: 18px 28px; border-top: 1px solid var(--line); flex-wrap: wrap; }
+
+    /* Réservations */
+    .res { padding: 20px; display: grid; gap: 12px; margin-bottom: 14px; }
+    .res-head { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; align-items: center; }
+    .res-head h3 { margin: 0; font-size: 1.15rem; }
+    .status { font-size: .78rem; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; padding: 4px 10px; border-radius: 999px; }
+    .st-nouvelle { background: rgba(94,23,235,.25); color: #d6ceff; }
+    .st-prete { background: rgba(255,181,71,.18); color: #ffd69a; }
+    .st-retiree { background: rgba(60,207,142,.16); color: #9ff0c9; }
+    .st-annulee { background: rgba(255,92,122,.16); color: #ffb3c1; }
+    .res ul { margin: 0; padding-left: 18px; color: #dcdcea; font-size: .93rem; }
+    .res .meta { display: flex; gap: 18px; flex-wrap: wrap; font-size: .9rem; color: var(--muted); }
+    .res .meta a { color: #fff; }
+    .filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+    .filters button { font: inherit; font-size: .88rem; padding: 7px 14px; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: #dcdcea; cursor: pointer; }
+    .filters button.active { background: var(--violet); border-color: var(--violet); color: #fff; }
+    .msg { padding: 18px 20px; margin-bottom: 12px; }
+    .msg.unread { border-color: rgba(139,117,255,.5); }
+    .msg p { white-space: pre-line; margin: 10px 0 0; color: #dcdcea; }
+
+    .mobile-top { display: none; }
+    @media (max-width: 900px) {
+      .app { grid-template-columns: 1fr; }
+      .side { position: fixed; z-index: 70; left: 0; width: 260px; transform: translateX(-100%); transition: transform .3s; }
+      .side.open { transform: none; box-shadow: var(--shadow); }
+      .mobile-top { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; border-bottom: 1px solid var(--line); background: var(--night-800); position: sticky; top: 0; z-index: 60; }
+      .mobile-top img { height: 36px; width: auto; }
+      .hide-sm { display: none; }
+    }
+  </style>
+</head>
+<body data-page="admin">
+
+<!-- Connexion -->
+<div class="login" id="login" hidden>
+  <form class="card" id="login-form">
+    <img src="../images/logo.png" alt="Axe Info">
+    <h2 style="text-align:center;font-size:1.4rem;margin:0">Backoffice</h2>
+    <label class="field">Identifiant<input class="input" type="text" name="user" autocomplete="username" autocapitalize="characters" required autofocus></label>
+    <label class="field">Mot de passe<input class="input" type="password" name="password" autocomplete="current-password" required></label>
+    <div id="login-msg"></div>
+    <button class="btn btn-primary" type="submit">Se connecter</button>
+    <a href="../index.html" class="muted" style="text-align:center;font-size:.88rem">← Retour au site</a>
+  </form>
+</div>
+
+<!-- Application -->
+<div class="app" id="app" hidden>
+  <aside class="side" id="side">
+    <img src="../images/logo.png" alt="Axe Info">
+    <button data-view="products" class="active"><i data-icon="box"></i>Catalogue</button>
+    <button data-view="reservations"><i data-icon="cart"></i>Réservations<span class="pill" id="pill-res" hidden></span></button>
+    <button data-view="messages"><i data-icon="mail"></i>Demandes de devis<span class="pill" id="pill-msg" hidden></span></button>
+    <div class="grow"></div>
+    <a class="navl" href="../boutique.html" target="_blank"><i data-icon="store"></i>Voir la boutique</a>
+    <button id="logout"><i data-icon="arrow"></i>Se déconnecter</button>
+  </aside>
+
+  <div>
+    <div class="mobile-top"><img src="../images/logo.png" alt="Axe Info"><button class="burger" id="side-toggle" style="display:grid" aria-label="Menu"><i data-icon="menu"></i></button></div>
+    <main class="main">
+
+      <!-- Catalogue -->
+      <section id="view-products" style="padding:0">
+        <div class="topbar">
+          <h1>Catalogue</h1>
+          <button class="btn btn-primary" id="new-product"><i data-icon="plus"></i>Ajouter un article</button>
+        </div>
+        <div class="kpis" id="kpis"></div>
+        <div class="toolbar">
+          <label class="search"><i data-icon="search"></i><input class="input" id="pq" type="search" placeholder="Rechercher par nom, marque, catégorie…"></label>
+          <select class="input" id="pcat"><option value="">Toutes les catégories</option></select>
+          <select class="input" id="pfilter">
+            <option value="">Tous les articles</option><option value="visible">En ligne</option><option value="hidden">Masqués</option><option value="out">En rupture</option><option value="promo">En promotion</option>
+          </select>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th></th><th>Article</th><th class="hide-sm">Catégorie</th><th>Prix</th><th>Stock</th><th>En ligne</th><th></th></tr></thead>
+            <tbody id="ptable"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Réservations -->
+      <section id="view-reservations" style="padding:0" hidden>
+        <div class="topbar"><h1>Réservations</h1><span class="muted">Retrait et paiement au comptoir</span></div>
+        <div class="filters" id="rfilters"></div>
+        <div id="rlist"></div>
+      </section>
+
+      <!-- Messages -->
+      <section id="view-messages" style="padding:0" hidden>
+        <div class="topbar"><h1>Demandes de devis</h1></div>
+        <div id="mlist"></div>
+      </section>
+    </main>
+  </div>
+</div>
+
+<!-- Éditeur -->
+<div class="overlay" id="ed-overlay"></div>
+<div class="modal" id="editor" role="dialog" aria-modal="true" aria-label="Article">
+  <form class="panel editor" id="ed-form" novalidate>
+    <header style="display:flex;justify-content:space-between;align-items:center;padding:22px 28px;border-bottom:1px solid var(--line)">
+      <h3 style="margin:0" id="ed-title">Nouvel article</h3>
+      <button type="button" class="icon-btn" id="ed-close" aria-label="Fermer"><i data-icon="close"></i></button>
+    </header>
+    <div class="grid">
+      <div>
+        <div class="drop" id="drop" tabindex="0">Glissez une photo ici<br>ou cliquez pour choisir</div>
+        <input type="file" id="file" accept="image/jpeg,image/png,image/webp" hidden>
+        <div style="display:flex;gap:8px;margin-top:10px">
+          <button type="button" class="mini" id="img-change" style="flex:1">Changer la photo</button>
+          <button type="button" class="mini danger" id="img-remove">Retirer</button>
+        </div>
+        <p class="form-note" style="margin-top:8px">Les photos sont redimensionnées automatiquement (1200 px max).</p>
+      </div>
+      <div class="fields">
+        <input type="hidden" name="id">
+        <input type="hidden" name="image">
+        <label class="field">Nom de l'article *<input class="input" name="name" required maxlength="160"></label>
+        <div class="form-row">
+          <label class="field">Marque<input class="input" name="brand" maxlength="60" list="brands"></label>
+          <label class="field">Catégorie *<input class="input" name="category" required maxlength="60" list="cats" placeholder="Informatique, Hi-Fi…"></label>
+        </div>
+        <div class="form-row3">
+          <label class="field">Prix TTC (€) *<input class="input" name="price" type="number" min="0" step="0.01" required></label>
+          <label class="field">Prix promo (€)<input class="input" name="promo_price" type="number" min="0" step="0.01" placeholder="facultatif"></label>
+          <label class="field">Stock<input class="input" name="stock" type="number" min="0" step="1" value="1"></label>
+        </div>
+        <label class="field">État
+          <select class="input" name="condition"><option value="neuf">Neuf</option><option value="occasion">Occasion / reconditionné</option></select>
+        </label>
+        <label class="field">Description<textarea class="input" name="description" maxlength="4000" placeholder="Caractéristiques, garantie, conseils…"></textarea></label>
+        <div class="toggles">
+          <label><span class="switch"><input type="checkbox" name="visible" checked><span></span></span>Visible en boutique</label>
+          <label><span class="switch"><input type="checkbox" name="featured"><span></span></span>Mettre en avant</label>
+        </div>
+        <div id="ed-msg"></div>
+      </div>
+    </div>
+    <footer>
+      <button type="button" class="btn btn-ghost btn-sm" id="ed-delete" style="border-color:rgba(255,92,122,.4);color:#ffb3c1">Supprimer</button>
+      <div style="display:flex;gap:10px;margin-left:auto">
+        <button type="button" class="btn btn-ghost btn-sm" id="ed-cancel">Annuler</button>
+        <button type="submit" class="btn btn-primary btn-sm" id="ed-save">Enregistrer</button>
+      </div>
+    </footer>
+  </form>
+</div>
+<datalist id="cats"></datalist>
+<datalist id="brands"></datalist>
+
+<script src="../assets/site.js"></script>
+<script src="admin.js?v=2"></script>
+</body>
+</html>

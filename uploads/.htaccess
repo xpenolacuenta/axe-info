@@ -1,0 +1,5 @@
+# Les images envoyées ne doivent jamais être exécutées
+<FilesMatch "\.(php|phtml|phar|pl|py|cgi|sh)$">
+  Require all denied
+</FilesMatch>
+Options -Indexes

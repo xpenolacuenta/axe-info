@@ -1,0 +1,11 @@
+# Secrets : à créer sur le serveur à partir de config.example.php
+config.php
+
+# Données vivantes (catalogue, réservations, messages, photos envoyées)
+data/*.json
+!data/catalogue.seed.json
+uploads/*
+!uploads/.htaccess
+
+.DS_Store
+__pycache__/

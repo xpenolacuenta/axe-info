@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Boutique · Réservez en ligne, retirez au magasin · Axe Info Lannion</title>
+  <meta name="description" content="Réservez en ligne vos produits informatiques, Hi-Fi, téléphonie et TV, et retirez-les au magasin Axe Info à Lannion. Paiement au comptoir, aucun paiement en ligne.">
+  <link rel="icon" href="images/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Play:wght@400;700&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body data-page="boutique">
+<header id="site-header" data-solid></header>
+
+<main>
+  <section class="page-hero" style="padding-bottom:50px">
+    <div class="container">
+      <span class="eyebrow">Boutique · retrait au comptoir</span>
+      <h1>Réservez en ligne, <span class="grad">retirez au magasin</span></h1>
+      <p class="lead" style="max-width:640px">Choisissez vos articles, envoyez votre réservation : nous les mettons de côté et vous prévenons dès qu'ils sont prêts. Le paiement se fait uniquement au comptoir.</p>
+      <div class="shop-steps">
+        <div class="shop-step"><b>1</b>Ajoutez vos articles à la réservation</div>
+        <div class="shop-step"><b>2</b>Nous vous prévenons quand c'est prêt</div>
+        <div class="shop-step"><b>3</b>Retrait et paiement au magasin</div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top:20px">
+    <div class="container shop-layout">
+      <aside class="shop-side">
+        <div>
+          <div class="side-title">Catégories</div>
+          <div class="cat-list" id="cat-list"></div>
+        </div>
+        <div class="card" style="padding:18px">
+          <div class="side-title">Retrait</div>
+          <p style="font-size:.9rem;margin:0 0 6px">14 rue Compagnie Roger Barbe, 22300 Lannion</p>
+          <p class="muted" style="font-size:.85rem;margin:0">Mardi → samedi<br>10h – 13h · 14h – 18h30</p>
+        </div>
+      </aside>
+
+      <div>
+        <div class="cat-pills" id="cat-pills"></div>
+        <div class="toolbar">
+          <label class="search"><i data-icon="search"></i><input class="input" id="q" type="search" placeholder="Rechercher un produit, une marque…" aria-label="Rechercher"></label>
+          <select class="input" id="cond" aria-label="État">
+            <option value="">Neuf &amp; occasion</option><option value="neuf">Neuf</option><option value="occasion">Occasion</option>
+          </select>
+          <select class="input" id="sort" aria-label="Trier">
+            <option value="featured">Mis en avant</option><option value="price-asc">Prix croissant</option><option value="price-desc">Prix décroissant</option><option value="name">Nom A → Z</option>
+          </select>
+        </div>
+        <div class="result-count" id="count"></div>
+        <div class="products" id="products"><div class="empty">Chargement du catalogue…</div></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="overlay" id="pm-overlay"></div>
+<div class="modal" id="pm" role="dialog" aria-modal="true" aria-label="Détail du produit"><div class="panel" id="pm-panel"></div></div>
+
+<footer id="site-footer"></footer>
+<script src="assets/site.js"></script>
+<script src="assets/shop.js"></script>
+</body>
+</html>
