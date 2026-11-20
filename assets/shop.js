@@ -122,6 +122,8 @@
       products = out.products || [];
       if (state.cat && !products.some((p) => p.category === state.cat)) state.cat = "";
       renderCats(); renderList();
+      const pid = params.get("p");
+      if (pid && !load.opened) { load.opened = true; openProduct(pid); }
     } catch {
       $("#products").innerHTML = `<div class="empty" style="grid-column:1/-1">Le catalogue est momentanément indisponible. Appelez-nous au 02 96 15 05 38.</div>`;
     }

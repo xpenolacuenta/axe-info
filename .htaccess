@@ -3,3 +3,29 @@ DirectoryIndex index.html index.php
 <FilesMatch "^(config\.php|config\.example\.php|README\.md|\.gitignore)$">
   Require all denied
 </FilesMatch>
+
+# Redirections : www vers le domaine principal, et anciennes adresses du site Wix
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^www\.axe-info\.fr$ [NC]
+RewriteRule ^(.*)$ https://axe-info.fr/$1 [R=301,L]
+
+RewriteRule ^boutique/?$ /boutique.html [R=301,L]
+RewriteRule ^category/ /boutique.html [R=301,L]
+RewriteRule ^nos-services/?$ /#services [R=301,NE,L]
+RewriteRule ^mentions-l(é|%C3%A9|e)gales/?$ /mentions-legales.html [R=301,NC,L]
+RewriteRule ^product-page/combine-audio-cd-web-radio-ruarkaudio-r3s/?$ /boutique.html?p=p_axe00 [R=301,L]
+RewriteRule ^product-page/lenovo-v15-1/?$ /boutique.html?p=p_axe01 [R=301,L]
+RewriteRule ^product-page/tangent-radio-fem-noir/?$ /boutique.html?p=p_axe02 [R=301,L]
+RewriteRule ^product-page/marion-erazer-crawler-e30e/?$ /boutique.html?p=p_axe03 [R=301,L]
+RewriteRule ^product-page/pc-portable-occasion-hp/?$ /boutique.html?p=p_axe04 [R=301,L]
+RewriteRule ^product-page/dell-14/?$ /boutique.html?p=p_axe05 [R=301,L]
+RewriteRule ^product-page/lenovo-v15/?$ /boutique.html?p=p_axe06 [R=301,L]
+RewriteRule ^product-page/hp-15/?$ /boutique.html?p=p_axe07 [R=301,L]
+RewriteRule ^product-page/acer-aspire-go-15/?$ /boutique.html?p=p_axe08 [R=301,L]
+RewriteRule ^product-page/lg-ultrawide-29/?$ /boutique.html?p=p_axe09 [R=301,L]
+RewriteRule ^product-page/medion-e15/?$ /boutique.html?p=p_axe10 [R=301,L]
+RewriteRule ^product-page/ggmm-e2/?$ /boutique.html?p=p_axe11 [R=301,L]
+RewriteRule ^product-page/hp-17/?$ /boutique.html?p=p_axe12 [R=301,L]
+RewriteRule ^product-page/lenovo-ideapad-slim-3/?$ /boutique.html?p=p_axe13 [R=301,L]
+RewriteRule ^product-page/barre-son-yamaha-ats1090/?$ /boutique.html?p=p_axe14 [R=301,L]
+RewriteRule ^product-page/ /boutique.html [R=301,L]
