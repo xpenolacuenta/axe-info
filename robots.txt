@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /api.php
+Disallow: /data/
+
+Sitemap: https://axe-info.fr/sitemap.xml
