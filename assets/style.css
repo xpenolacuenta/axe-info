@@ -205,6 +205,8 @@ section { padding: clamp(64px, 9vw, 120px) 0; position: relative; }
 .split { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
 .split .media { border-radius: 24px; overflow: hidden; border: 1px solid var(--line); box-shadow: var(--shadow); aspect-ratio: 4/3; }
 .split .media img { width: 100%; height: 100%; object-fit: cover; }
+.split .media.duo { aspect-ratio: auto; display: grid; gap: 12px; border: 0; box-shadow: none; border-radius: 0; overflow: visible; }
+.split .media.duo img { aspect-ratio: 4/3; height: auto; border-radius: 24px; border: 1px solid var(--line); box-shadow: var(--shadow); }
 @media (max-width: 900px) { .split { grid-template-columns: 1fr; gap: 36px; } }
 .checks { list-style: none; padding: 0; margin: 0 0 28px; display: grid; gap: 12px; }
 .checks li { display: flex; gap: 12px; align-items: flex-start; color: #dcdcea; }

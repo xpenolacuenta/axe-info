@@ -114,7 +114,7 @@
         <div class="footer-grid">
           <div>
             <img src="images/logo.png" alt="Axe Info" style="height:56px;width:auto;margin-bottom:14px">
-            <p class="muted" style="max-width:320px">Votre magasin informatique &amp; Hi-Fi au cœur de Lannion depuis 2014. Vente, réparation, installation et location de sono pour particuliers et professionnels.</p>
+            <p class="muted" style="max-width:320px">Votre magasin informatique, son et vidéo au cœur de Lannion depuis 2014. Vente, réparation, installation et location de sono pour particuliers et professionnels.</p>
             <div class="socials">
               <a href="${SHOP.facebook}" target="_blank" rel="noopener" aria-label="Facebook">${icon("fb")}</a>
               <a href="${SHOP.instagram}" target="_blank" rel="noopener" aria-label="Instagram">${icon("ig")}</a>
