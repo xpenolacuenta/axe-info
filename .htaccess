@@ -29,3 +29,10 @@ RewriteRule ^product-page/hp-17/?$ /boutique.html?p=p_axe12 [R=301,L]
 RewriteRule ^product-page/lenovo-ideapad-slim-3/?$ /boutique.html?p=p_axe13 [R=301,L]
 RewriteRule ^product-page/barre-son-yamaha-ats1090/?$ /boutique.html?p=p_axe14 [R=301,L]
 RewriteRule ^product-page/ /boutique.html [R=301,L]
+
+# Feuilles de style et scripts : cache court, pour que les mises à jour s'affichent vite
+<IfModule mod_headers.c>
+  <FilesMatch "\.(css|js)$">
+    Header set Cache-Control "public, max-age=3600"
+  </FilesMatch>
+</IfModule>
